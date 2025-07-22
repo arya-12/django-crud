@@ -1,0 +1,61 @@
+<!-- templates/app/task_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% if task %}Update{% else %}Create{% endif %} Task</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1e1e2f, #2c3e50);
+    }
+    @keyframes fade-in {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fade-in 0.6s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center text-white">
+  <div class="bg-white/10 backdrop-blur-md p-10 rounded-2xl shadow-2xl w-full max-w-md animate-fade-in">
+    
+    <h1 class="text-2xl font-bold text-center mb-6">
+      {% if task %}📝 Update Task{% else %}➕ Create Task{% endif %}
+    </h1>
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="space-y-5">
+        <div>
+          <label for="{{ form.title.id_for_label }}" class="block mb-1 font-medium text-white">Title</label>
+          {{ form.title }}
+        </div>
+
+        <div>
+          <label for="{{ form.description.id_for_label }}" class="block mb-1 font-medium text-white">Description</label>
+          {{ form.description }}
+        </div>
+
+        <div>
+          <label class="inline-flex items-center space-x-2">
+            {{ form.completed }}
+            <span>Completed</span>
+          </label>
+        </div>
+
+        <div class="flex justify-between mt-6">
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg shadow-md transition-all">
+            {% if task %}Update{% else %}Create{% endif %}
+          </button>
+
+          <a href="{% url 'task_list' %}" class="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-lg shadow-md transition-all">
+            Cancel
+          </a>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

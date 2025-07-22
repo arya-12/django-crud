@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Tasks</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+  <div class="bg-white/30 backdrop-blur-md rounded-xl shadow-2xl p-8 w-full max-w-3xl text-white">
+    <h1 class="text-3xl font-bold mb-6 text-center">📋 My Tasks</h1>
+
+    <div class="flex justify-end mb-6">
+      <a href="{% url 'task_create' %}" class="px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-all duration-300 shadow-md">
+        ➕ Add Task
+      </a>
+    </div>
+
+    <ul class="space-y-4">
+      {% for task in tasks %}
+        <li class="flex justify-between items-center bg-white/20 backdrop-blur-sm p-4 rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
+          <div>
+            <p class="text-xl font-semibold text-white">{{ task.time }}</p>
+            <p class="text-white/90">{{ task.title }}</p>
+          </div>
+          <div class="space-x-3">
+            <a href="{% url 'task_update' task.id %}" class="text-blue-300 hover:text-blue-500 underline">Edit</a>
+            <a href="{% url 'task_delete' task.id %}" class="text-red-300 hover:text-red-500 underline">Delete</a>
+          </div>
+        </li>
+      {% empty %}
+        <li class="text-center text-white/80">No tasks available. Add one!</li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
